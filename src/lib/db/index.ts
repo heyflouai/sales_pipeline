@@ -38,3 +38,14 @@ export async function setUserContext(userId: string, role: string): Promise<void
   await db.execute(sql`SET LOCAL app.current_user_id = ${userId}`);
   await db.execute(sql`SET LOCAL app.user_role = ${role}`);
 }
+
+/**
+ * Helper to set tenant context from Next.js headers (set by middleware).
+ * Use this in API routes and Server Actions before database queries.
+ */
+export async function setTenantContextFromHeaders(headers: Headers): Promise<void> {
+  const orgId = headers.get("x-organization-id");
+  if (orgId) {
+    await setTenantContext(orgId);
+  }
+}
