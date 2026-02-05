@@ -174,13 +174,108 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| *To be populated by roadmap* | | |
+| AUTH-01 | Phase 1 | Pending |
+| AUTH-02 | Phase 1 | Pending |
+| AUTH-03 | Phase 1 | Pending |
+| AUTH-04 | Phase 1 | Pending |
+| AUTH-05 | Phase 1 | Pending |
+| TENANT-01 | Phase 1 | Pending |
+| TENANT-02 | Phase 1 | Pending |
+| TENANT-03 | Phase 1 | Pending |
+| TENANT-04 | Phase 1 | Pending |
+| TENANT-05 | Phase 1 | Pending |
+| TENANT-06 | Phase 1 | Pending |
+| ROLE-01 | Phase 1 | Pending |
+| ROLE-02 | Phase 1 | Pending |
+| ROLE-03 | Phase 1 | Pending |
+| ROLE-04 | Phase 1 | Pending |
+| WHATSAPP-01 | Phase 2 | Pending |
+| WHATSAPP-02 | Phase 2 | Pending |
+| WHATSAPP-03 | Phase 2 | Pending |
+| WHATSAPP-04 | Phase 2 | Pending |
+| WHATSAPP-05 | Phase 2 | Pending |
+| WHATSAPP-06 | Phase 2 | Pending |
+| WHATSAPP-07 | Phase 2 | Pending |
+| WHATSAPP-08 | Phase 2 | Pending |
+| WHATSAPP-09 | Phase 2 | Pending |
+| WHATSAPP-10 | Phase 2 | Pending |
+| WHATSAPP-11 | Phase 2 | Pending |
+| TEMPLATE-01 | Phase 2 | Pending |
+| TEMPLATE-02 | Phase 2 | Pending |
+| TEMPLATE-03 | Phase 2 | Pending |
+| TEMPLATE-04 | Phase 2 | Pending |
+| TEMPLATE-05 | Phase 2 | Pending |
+| CONTACT-01 | Phase 2 | Pending |
+| CONTACT-02 | Phase 2 | Pending |
+| INBOX-08 | Phase 2 | Pending |
+| INBOX-09 | Phase 2 | Pending |
+| PIPELINE-01 | Phase 3 | Pending |
+| PIPELINE-02 | Phase 3 | Pending |
+| PIPELINE-03 | Phase 3 | Pending |
+| PIPELINE-04 | Phase 3 | Pending |
+| PIPELINE-05 | Phase 3 | Pending |
+| PIPELINE-06 | Phase 3 | Pending |
+| PIPELINE-07 | Phase 3 | Pending |
+| PIPELINE-08 | Phase 3 | Pending |
+| PIPELINE-09 | Phase 3 | Pending |
+| PIPELINE-10 | Phase 3 | Pending |
+| PIPELINE-11 | Phase 3 | Pending |
+| CRM-01 | Phase 3 | Pending |
+| CRM-02 | Phase 3 | Pending |
+| CRM-03 | Phase 3 | Pending |
+| CRM-04 | Phase 3 | Pending |
+| CRM-05 | Phase 3 | Pending |
+| CRM-06 | Phase 3 | Pending |
+| CRM-07 | Phase 3 | Pending |
+| CRM-08 | Phase 3 | Pending |
+| CONTEXT-01 | Phase 3 | Pending |
+| CONTEXT-02 | Phase 3 | Pending |
+| CONTEXT-03 | Phase 3 | Pending |
+| CONTEXT-04 | Phase 3 | Pending |
+| CONTEXT-05 | Phase 3 | Pending |
+| CONTEXT-06 | Phase 3 | Pending |
+| CONTEXT-07 | Phase 3 | Pending |
+| CONTEXT-08 | Phase 3 | Pending |
+| CONTEXT-09 | Phase 3 | Pending |
+| CONTACT-03 | Phase 3 | Pending |
+| CONTACT-04 | Phase 3 | Pending |
+| CONTACT-05 | Phase 3 | Pending |
+| CONTACT-06 | Phase 3 | Pending |
+| CONTACT-07 | Phase 3 | Pending |
+| CONTACT-08 | Phase 3 | Pending |
+| INBOX-01 | Phase 3 | Pending |
+| INBOX-02 | Phase 3 | Pending |
+| INBOX-03 | Phase 3 | Pending |
+| INBOX-04 | Phase 3 | Pending |
+| INBOX-05 | Phase 3 | Pending |
+| INBOX-06 | Phase 3 | Pending |
+| INBOX-07 | Phase 3 | Pending |
+| INBOX-10 | Phase 3 | Pending |
+| ROLE-05 | Phase 3 | Pending |
+| ROLE-06 | Phase 3 | Pending |
+| ROLE-07 | Phase 3 | Pending |
+| ROLE-08 | Phase 3 | Pending |
+| ROLE-09 | Phase 3 | Pending |
+| ROLE-10 | Phase 3 | Pending |
+| ANALYTICS-01 | Phase 4 | Pending |
+| ANALYTICS-02 | Phase 4 | Pending |
+| ANALYTICS-03 | Phase 4 | Pending |
+| ANALYTICS-04 | Phase 4 | Pending |
+| ANALYTICS-05 | Phase 4 | Pending |
+| ANALYTICS-06 | Phase 4 | Pending |
+| ANALYTICS-07 | Phase 4 | Pending |
 
 **Coverage:**
 - v1 requirements: 73 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 73 ⚠️
+- Mapped to phases: 73 (100%)
+- Unmapped: 0
+
+**Phase breakdown:**
+- Phase 1 (Foundation & Multi-Tenant Security): 15 requirements
+- Phase 2 (WhatsApp Core & Real-Time Messaging): 20 requirements
+- Phase 3 (Pipeline & Context Preservation): 31 requirements
+- Phase 4 (Analytics & Production Readiness): 7 requirements
 
 ---
 *Requirements defined: 2026-02-05*
-*Last updated: 2026-02-05 after initial definition*
+*Last updated: 2026-02-05 after roadmap creation*
