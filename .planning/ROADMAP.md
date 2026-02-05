@@ -29,11 +29,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. User can reset forgotten password via email link
   4. Admin can create organization and invite team members with role assignment
   5. Database enforces Row-Level Security preventing cross-tenant data access
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
+- [ ] 01-01-PLAN.md — Scaffold Next.js 15 project, define Drizzle schema, generate migrations with RLS policies
+- [ ] 01-02-PLAN.md — Integrate Clerk auth, webhook sync, RBAC utilities, and protected dashboard shell
 
 ### Phase 2: WhatsApp Core & Real-Time Messaging
 **Goal**: Users can send and receive WhatsApp messages with real-time updates while respecting the 24-hour conversation window
@@ -97,12 +97,13 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Multi-Tenant Security | 0/2 | Not started | - |
+| 1. Foundation & Multi-Tenant Security | 0/2 | Planning complete | - |
 | 2. WhatsApp Core & Real-Time Messaging | 0/3 | Not started | - |
 | 3. Pipeline & Context Preservation | 0/3 | Not started | - |
 | 4. Analytics & Production Readiness | 0/2 | Not started | - |
 
 ---
 *Roadmap created: 2026-02-05*
+*Phase 1 planned: 2026-02-05*
 *Total phases: 4*
 *Total plans: 10 (estimated)*
