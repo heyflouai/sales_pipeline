@@ -27,11 +27,32 @@ let env: Env;
 export function validateEnv(): Env {
   if (env) return env;
 
+  // Skip validation during build if env vars are placeholders
+  const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+  const databaseUrl = process.env.DATABASE_URL;
+
+  if (
+    publishableKey?.includes('...') ||
+    databaseUrl?.includes('[project-ref]')
+  ) {
+    console.warn(
+      "⚠️  Environment variables not configured. Please set up Clerk and Supabase and update .env.local"
+    );
+    // Return mock env during build
+    return {
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: publishableKey || 'pk_test_placeholder',
+      CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY || 'sk_test_placeholder',
+      CLERK_WEBHOOK_SECRET: process.env.CLERK_WEBHOOK_SECRET || 'whsec_placeholder',
+      DATABASE_URL: databaseUrl || 'postgresql://placeholder',
+      DIRECT_DATABASE_URL: process.env.DIRECT_DATABASE_URL || 'postgresql://placeholder',
+    };
+  }
+
   const parsed = envSchema.safeParse({
-    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: publishableKey,
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
     CLERK_WEBHOOK_SECRET: process.env.CLERK_WEBHOOK_SECRET,
-    DATABASE_URL: process.env.DATABASE_URL,
+    DATABASE_URL: databaseUrl,
     DIRECT_DATABASE_URL: process.env.DIRECT_DATABASE_URL,
   });
 
