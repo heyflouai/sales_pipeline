@@ -11,28 +11,28 @@ See: .planning/PROJECT.md (updated 2026-02-05)
 ## Current Position
 
 Phase: 1 of 4 (Foundation & Multi-Tenant Security)
-Plan: 0 of 2 in current phase
-Status: Ready to plan
-Last activity: 2026-02-05 - Roadmap created with 4 phases
+Plan: 1 of 2 in current phase
+Status: In progress
+Last activity: 2026-02-05 - Completed 01-01-PLAN.md
 
-Progress: [..........] 0%
+Progress: [█.........] 10%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
-- Average duration: N/A
-- Total execution time: 0 hours
+- Total plans completed: 1
+- Average duration: 12 minutes
+- Total execution time: 0.2 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 01 | 1 | 12min | 12min |
 
 **Recent Trend:**
-- Last 5 plans: N/A
-- Trend: N/A
+- Last 5 plans: 01-01 (12min)
+- Trend: Starting baseline
 
 *Updated after each plan completion*
 
@@ -49,9 +49,21 @@ Recent decisions affecting current work:
 - Configurable stages/roles/forms - Different businesses have different sales processes, flexibility is competitive advantage
 - Serverless-compatible architecture - Reduces infrastructure costs and complexity for SaaS deployment
 
+**From 01-01:**
+
+| ID | Decision | Impact |
+|----|----------|--------|
+| SCHEMA-01 | Use text primary keys for Clerk IDs | Simpler integration, slightly larger indexes |
+| RLS-01 | Use session variables for tenant context | Must call setTenantContext before queries |
+| DB-01 | Supabase with transaction pooling (prepare: false) | Enables serverless deployment |
+
 ### Pending Todos
 
-None yet.
+**Before 01-02:**
+- Create Supabase project and populate .env.local with DATABASE_URL and DIRECT_DATABASE_URL
+- Run `npm run db:migrate` to apply schema migrations
+- Create Clerk account and add API keys to .env.local
+- Verify RLS policies are active in Supabase dashboard
 
 ### Blockers/Concerns
 
@@ -70,7 +82,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-05
-Stopped at: Roadmap created with 4 phases, ready for Phase 1 planning
+Stopped at: Completed 01-01-PLAN.md (Next.js scaffold + database schema)
 Resume file: None
 
 ---
