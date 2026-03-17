@@ -11,28 +11,28 @@ See: .planning/PROJECT.md (updated 2026-02-05)
 ## Current Position
 
 Phase: 1 of 4 (Foundation & Multi-Tenant Security)
-Plan: 1 of 2 in current phase
-Status: In progress
-Last activity: 2026-02-05 - Completed 01-01-PLAN.md
+Plan: 2 of 2 in current phase
+Status: Phase 1 COMPLETE ✅
+Last activity: 2026-03-17 - Completed 01-02-PLAN.md (Clerk Auth + RBAC + Dashboard Shell)
 
-Progress: [█.........] 10%
+Progress: [██........] 20%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
-- Average duration: 12 minutes
-- Total execution time: 0.2 hours
+- Total plans completed: 2
+- Average duration: ~28 minutes
+- Total execution time: ~0.9 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01 | 1 | 12min | 12min |
+| 01 | 2 | ~56min | ~28min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (12min)
-- Trend: Starting baseline
+- Last 5 plans: 01-01 (12min), 01-02 (45min)
+- Trend: Phase 1 complete
 
 *Updated after each plan completion*
 
@@ -59,11 +59,25 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-**Before 01-02:**
-- Create Supabase project and populate .env.local with DATABASE_URL and DIRECT_DATABASE_URL
-- Run `npm run db:migrate` to apply schema migrations
-- Create Clerk account and add API keys to .env.local
-- Verify RLS policies are active in Supabase dashboard
+**Phase 1 Complete — Phase 2 Ready to Start**
+
+**Before running in production (human setup required):**
+- Create Clerk application at https://dashboard.clerk.com
+  - Enable Organizations feature
+  - Create custom roles: `org:manager` and `org:agent`
+  - Create webhook endpoint → your-domain/api/webhooks/clerk
+  - Subscribe to: user.*, organization.*, organizationMembership.*
+  - Add keys to `.env.local`: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY, CLERK_SECRET_KEY, CLERK_WEBHOOK_SECRET
+- Create Supabase project at https://supabase.com/dashboard
+  - Add DATABASE_URL and DIRECT_DATABASE_URL to `.env.local`
+  - Run `npm run db:migrate`
+  - Verify RLS policies active in Supabase dashboard
+
+**Phase 2 next tasks:**
+- WhatsApp Meta Cloud API integration
+- Webhook receiver for incoming messages
+- Message storage and conversation threading
+- Real-time updates (SSE or polling)
 
 ### Blockers/Concerns
 
@@ -86,4 +100,13 @@ Stopped at: Completed 01-01-PLAN.md (Next.js scaffold + database schema)
 Resume file: None
 
 ---
-*Last updated: 2026-02-05*
+**From 01-02:**
+
+| ID | Decision | Impact |
+|----|----------|--------|
+| AUTH-01 | Edge middleware cannot call PostgreSQL | Use x-organization-id header; server code calls setTenantContext |
+| AUTH-02 | adminDb uses DIRECT_DATABASE_URL | Webhook ops bypass pooler and RLS |
+| AUTH-03 | Svix for webhook verification | Official Clerk recommendation |
+| AUTH-04 | Soft delete on org membership removal | Preserves conversation history |
+
+*Last updated: 2026-03-17*
