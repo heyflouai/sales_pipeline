@@ -18,9 +18,21 @@ const envSchema = z.object({
   // Database
   DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
   DIRECT_DATABASE_URL: z.string().min(1, "DIRECT_DATABASE_URL is required"),
+
+  // WhatsApp Meta Cloud API (optional during build — required for runtime)
+  WHATSAPP_VERIFY_TOKEN: z.string().optional(),
+  WHATSAPP_API_TOKEN: z.string().optional(),
+
+  // Supabase (for Realtime on client side)
+  NEXT_PUBLIC_SUPABASE_URL: z.string().optional(),
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().optional(),
+  SUPABASE_SERVICE_ROLE_KEY: z.string().optional(),
 });
 
 export type Env = z.infer<typeof envSchema>;
+
+// Type alias to allow optional WhatsApp fields
+export type EnvStrict = Required<Env>;
 
 let env: Env;
 
@@ -54,6 +66,11 @@ export function validateEnv(): Env {
     CLERK_WEBHOOK_SECRET: process.env.CLERK_WEBHOOK_SECRET,
     DATABASE_URL: databaseUrl,
     DIRECT_DATABASE_URL: process.env.DIRECT_DATABASE_URL,
+    WHATSAPP_VERIFY_TOKEN: process.env.WHATSAPP_VERIFY_TOKEN,
+    WHATSAPP_API_TOKEN: process.env.WHATSAPP_API_TOKEN,
+    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
   });
 
   if (!parsed.success) {

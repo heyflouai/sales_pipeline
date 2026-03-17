@@ -6,16 +6,16 @@ See: .planning/PROJECT.md (updated 2026-02-05)
 
 **Core value:** Sales leads successfully move through pipeline stages with zero context loss - every handoff preserves the full conversation history, structured data, and team notes so the receiving rep has everything they need to continue the conversation naturally.
 
-**Current focus:** Phase 1 - Foundation & Multi-Tenant Security
+**Current focus:** Phase 2 - WhatsApp Core & Real-Time Messaging
 
 ## Current Position
 
-Phase: 1 of 4 (Foundation & Multi-Tenant Security)
-Plan: 2 of 2 in current phase
-Status: Phase 1 COMPLETE ✅
-Last activity: 2026-03-17 - Completed 01-02-PLAN.md (Clerk Auth + RBAC + Dashboard Shell)
+Phase: 2 of 4 (WhatsApp Core & Real-Time Messaging)
+Plan: 1 of 3 in current phase (02-01-PLAN.md COMPLETE ✅)
+Status: Phase 2 Plan 1 COMPLETE ✅
+Last activity: 2026-03-17 - Completed 02-01-PLAN.md (WhatsApp webhook, send API, message storage, Realtime, 24h window, contact auto-creation)
 
-Progress: [██........] 20%
+Progress: [████......] 40%
 
 ## Performance Metrics
 
@@ -59,7 +59,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-**Phase 1 Complete — Phase 2 Ready to Start**
+**Phase 2 Plan 1 Complete — Phase 2 Plans 02-02 and 02-03 next**
 
 **Before running in production (human setup required):**
 - Create Clerk application at https://dashboard.clerk.com
@@ -73,11 +73,21 @@ Recent decisions affecting current work:
   - Run `npm run db:migrate`
   - Verify RLS policies active in Supabase dashboard
 
-**Phase 2 next tasks:**
-- WhatsApp Meta Cloud API integration
-- Webhook receiver for incoming messages
-- Message storage and conversation threading
-- Real-time updates (SSE or polling)
+**Phase 2 status:** Plan 1 complete — core WhatsApp infrastructure built.
+
+**Completed in Phase 2 Plan 1 (02-01):**
+- WhatsApp Meta Cloud API webhook (GET verify + POST receive)
+- Send message API route (POST /api/whatsapp/send)
+- DB schema: contacts, conversations, messages tables + RLS + migration
+- 24h conversation window tracking (windowExpiresAt, windowStatus)
+- Contact auto-creation on first inbound message
+- Supabase Realtime client helpers (messages + conversations subscriptions)
+- Message status tracking (sent/delivered/read/failed)
+
+**Phase 2 remaining tasks (plans 02-02, 02-03):**
+- Message templates (TEMPLATE-01 through TEMPLATE-05)
+- Inbox UI with real-time message display
+- Media message support (images, documents)
 
 ### Blockers/Concerns
 
@@ -93,10 +103,18 @@ Recent decisions affecting current work:
 - Cold start impact on real-time UX - measure P95 response time, add provisioned concurrency if needed
 - WhatsApp media URL expiration - download within 1 hour of webhook receipt
 
+**Phase 2 Plan 1 — additional setup required (human):**
+- Register webhook URL at Meta Business → WhatsApp → Configuration: `https://your-domain/api/webhooks/whatsapp`
+- Set WHATSAPP_VERIFY_TOKEN (any secret string you choose)
+- Get WHATSAPP_API_TOKEN from Meta Business → System Users
+- Get WHATSAPP_APP_SECRET from Meta App Dashboard → Settings → Basic
+- Run `npm run db:migrate` to apply 0002_whatsapp_core.sql
+- Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY for Realtime
+
 ## Session Continuity
 
-Last session: 2026-02-05
-Stopped at: Completed 01-01-PLAN.md (Next.js scaffold + database schema)
+Last session: 2026-03-17
+Stopped at: Completed 02-01-PLAN.md (WhatsApp Core — webhook, send, storage, Realtime)
 Resume file: None
 
 ---
@@ -108,5 +126,15 @@ Resume file: None
 | AUTH-02 | adminDb uses DIRECT_DATABASE_URL | Webhook ops bypass pooler and RLS |
 | AUTH-03 | Svix for webhook verification | Official Clerk recommendation |
 | AUTH-04 | Soft delete on org membership removal | Preserves conversation history |
+
+**From 02-01:**
+
+| ID | Decision | Impact |
+|----|----------|--------|
+| WA-01 | adminDb in webhook handler — no RLS | Webhooks process all orgs, no user session available |
+| WA-02 | WHATSAPP_APP_SECRET for webhook signature verification | Meta signs payloads with app secret, not access token |
+| WA-03 | Unique constraint on wa_message_id | Idempotency — webhook replays won't create duplicate messages |
+| WA-04 | windowExpiresAt = +24h from each inbound message | Resets window on every customer reply (Meta spec) |
+| WA-05 | Supabase Realtime via @supabase/supabase-js anon key | Safe for client-side; RLS filters data per org on Supabase side |
 
 *Last updated: 2026-03-17*
