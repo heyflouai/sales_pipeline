@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, boolean, pgEnum, index, unique } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, pgEnum, index, unique, jsonb } from "drizzle-orm/pg-core";
 
 // User role enum
 export const userRoleEnum = pgEnum("user_role", ["admin", "manager", "agent"]);
@@ -80,6 +80,9 @@ export const messageDirectionEnum = pgEnum("message_direction", ["inbound", "out
 // Message status enum
 export const messageStatusEnum = pgEnum("message_status", ["sent", "delivered", "read", "failed"]);
 
+// Media type enum for message attachments
+export const mediaTypeEnum = pgEnum("media_type_enum", ["image", "document", "audio", "video"]);
+
 // Messages table — individual WhatsApp messages
 export const messages = pgTable("messages", {
   id: text("id").primaryKey(), // nanoid
@@ -93,6 +96,9 @@ export const messages = pgTable("messages", {
   waMessageId: text("wa_message_id"), // Meta message ID (wamid.xxx)
   content: text("content"), // message text
   status: messageStatusEnum("status").notNull().default("sent"),
+  mediaUrl: text("media_url"),
+  mediaType: text("media_type"),
+  mediaFilename: text("media_filename"),
   sentAt: timestamp("sent_at"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 }, (table) => ({
@@ -100,6 +106,26 @@ export const messages = pgTable("messages", {
   orgIdIdx: index("messages_org_id_idx").on(table.organizationId),
   waMessageIdIdx: index("messages_wa_message_id_idx").on(table.waMessageId),
   waMessageIdUniq: unique("messages_wa_message_id_unique").on(table.waMessageId),
+}));
+
+// Template status enum
+export const templateStatusEnum = pgEnum("template_status", ["pending", "approved", "rejected"]);
+
+// WhatsApp Templates table
+export const whatsappTemplates = pgTable("whatsapp_templates", {
+  id: text("id").primaryKey(), // nanoid
+  orgId: text("org_id")
+    .notNull()
+    .references(() => organizations.id, { onDelete: "cascade" }),
+  name: text("name").notNull(),
+  language: text("language").notNull().default("en_US"),
+  category: text("category").notNull().default("UTILITY"),
+  components: jsonb("components").notNull().default([]),
+  status: text("status").notNull().default("pending"),
+  waTemplateId: text("wa_template_id"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => ({
+  orgIdIdx: index("whatsapp_templates_org_id_idx").on(table.orgId),
 }));
 
 // TypeScript types
@@ -120,3 +146,6 @@ export type Message = typeof messages.$inferSelect;
 export type NewMessage = typeof messages.$inferInsert;
 export type MessageDirection = typeof messageDirectionEnum.enumValues[number];
 export type MessageStatus = typeof messageStatusEnum.enumValues[number];
+
+export type WhatsAppTemplate = typeof whatsappTemplates.$inferSelect;
+export type NewWhatsAppTemplate = typeof whatsappTemplates.$inferInsert;

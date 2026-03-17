@@ -38,6 +38,14 @@ export interface WhatsAppContact {
   wa_id: string; // phone number without + prefix
 }
 
+export interface WhatsAppMediaObject {
+  id: string; // Media ID from Meta
+  mime_type?: string;
+  sha256?: string;
+  caption?: string;
+  filename?: string;
+}
+
 export interface WhatsAppMessage {
   from: string; // phone number without + prefix
   id: string; // wamid.xxx
@@ -46,6 +54,32 @@ export interface WhatsAppMessage {
   text?: {
     body: string;
   };
+  image?: WhatsAppMediaObject;
+  document?: WhatsAppMediaObject;
+  audio?: WhatsAppMediaObject;
+  video?: WhatsAppMediaObject;
+}
+
+export interface WhatsAppMediaUrlResponse {
+  url: string;
+  mime_type: string;
+  sha256: string;
+  file_size: number;
+  id: string;
+}
+
+export interface WhatsAppTemplateComponent {
+  type: "header" | "body" | "button";
+  sub_type?: string;
+  index?: number;
+  parameters?: Array<{
+    type: "text" | "image" | "document" | "video" | "payload";
+    text?: string;
+    image?: { link: string };
+    document?: { link: string; filename?: string };
+    video?: { link: string };
+    payload?: string;
+  }>;
 }
 
 export interface WhatsAppStatus {
